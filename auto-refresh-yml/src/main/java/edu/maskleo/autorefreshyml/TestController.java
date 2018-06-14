@@ -1,6 +1,7 @@
 package edu.maskleo.autorefreshyml;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,9 @@ public class TestController {
     @Autowired
     private TestAutoRefreshConfig autoRefreshConfig;
 
+    @Value("${test:xxxx}")
+    private String test;
+
     @RequestMapping("/")
     public ResponseEntity<String> index() {
         return new ResponseEntity<>(autoRefreshConfig.getTestVal(), HttpStatus.OK);
@@ -28,6 +32,7 @@ public class TestController {
         return new ResponseEntity<>(autoRefreshConfig.getTestVal(), HttpStatus.OK);
     }
 
+    //TODO: 通过注解拿到 TestAutoRefreshConfig
     private void reload() throws Exception {
         // reload from *.properties
         Properties properties = new Properties();
